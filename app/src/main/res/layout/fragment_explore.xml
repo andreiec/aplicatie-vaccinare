@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    tools:context=".ExploreFragment">
+
+    <!-- Main Container -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Blue Square Background -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:background="@color/blue_main">
+        </View>
+
+        <!-- Main Content -->
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Top Card and Image-->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginRight="20dp"
+                app:cardElevation="6dp"
+                app:cardCornerRadius="13dp">
+
+                <!-- Container for Rounded Squares -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
+
+                    <!-- White Rounded Square and Image -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@drawable/square_rounded_up_white">
+
+                        <ImageView
+                            android:layout_marginTop="5dp"
+                            android:padding="10dp"
+                            android:layout_width="match_parent"
+                            android:layout_height="225dp"
+                            android:src="@drawable/main_menu_doctors"
+                            android:contentDescription="MainDoctors">
+                        </ImageView>
+
+                    </RelativeLayout>
+
+                    <!-- Blue Rounded Square -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="105dp"
+                        android:background="@drawable/square_rounded_down_blue"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="75dp"
+
+                            android:layout_marginRight="50dp"
+                            android:layout_marginEnd="50dp"
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginStart="14dp"
+                            android:layout_marginTop="6dp"
+                            tools:ignore="RtlSymmetry"
+
+                            android:fontFamily="@font/poppinsbold"
+                            android:textColor="@color/white"
+                            android:textSize="26sp"
+                            android:lineSpacingMultiplier="0"
+                            android:lineSpacingExtra="32dp"
+                            android:autoSizeTextType="uniform"
+                            android:layout_marginBottom="-5dp"
+
+                            android:text="Află efectele Covid-19 și cum te poți proteja.">
+                        </TextView>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:layout_marginLeft="14dp"
+                            android:layout_marginStart="14dp"
+                            android:fontFamily="@font/poppinsbold"
+                            android:textColor="#C5D5FB"
+                            android:textSize="13sp"
+                            android:autoSizeTextType="uniform"
+
+                            android:text="12 minute">
+                        </TextView>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Middle Content -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+
+                android:orientation="vertical">
+
+                <!-- Informatii and Programare Button -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginStart="1dp"
+
+                        android:fontFamily="@font/poppinsbold"
+                        android:textSize="19.5sp"
+                        android:textColor="@color/black_main"
+                        android:text="Informații">
+                    </TextView>
+
+                    <Space
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1" />
+
+                    <!-- Button -->
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="24dp"
+                        android:background="@drawable/button_rounded"
+                        android:gravity="center"
+                        android:layout_marginBottom="2dp"
+                        style="@style/Widget.AppCompat.Button.Colored">
+
+                        <!-- Star -->
+                        <View
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+
+                            android:background="@drawable/star_icon"
+
+                            android:layout_marginRight="8dp"
+                            android:layout_marginLeft="10dp"
+                            android:layout_marginEnd="8dp"
+                            android:layout_marginStart="10dp">
+                        </View>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+
+                            android:fontFamily="@font/poppinsbold"
+                            android:textSize="13sp"
+                            android:textColor="@color/white"
+
+                            android:layout_marginRight="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginTop="1dp"
+
+                            android:text="Programează-te">
+                        </TextView>
+
+                    </LinearLayout>
+                </LinearLayout>
+
+                <!-- Cards -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/recyclerViewInfo"
+                        android:orientation="horizontal">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+
+            <!-- Bottom Content -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="50dp"
+                android:orientation="vertical">
+
+                <!-- Text Title -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+
+                    android:layout_marginLeft="20.6dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginStart="20.6dp"
+                    android:layout_marginEnd="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="1dp"
+                        android:layout_marginStart="1dp"
+
+                        android:fontFamily="@font/poppinsbold"
+                        android:textSize="19.5sp"
+                        android:textColor="@color/black_main"
+                        android:text="Noutăți">
+                    </TextView>
+                </LinearLayout>
+
+                <!-- Cards -->
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="10dp">
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/recyclerViewNews"
+                        android:orientation="horizontal">
+                    </androidx.recyclerview.widget.RecyclerView>
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </RelativeLayout>
+</ScrollView>
