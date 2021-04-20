@@ -19,4 +19,9 @@
         android:name="com.example.aplicatievaccinare.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
+    <fragment
+        android:id="@+id/programFragment"
+        android:name="com.example.aplicatievaccinare.ProgramFragment"
+        android:label="fragment_program"
+        tools:layout="@layout/fragment_program" />
 </navigation>

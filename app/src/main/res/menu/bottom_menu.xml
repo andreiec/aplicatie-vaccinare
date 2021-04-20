@@ -13,4 +13,8 @@
         android:id="@+id/profileFragment"
         android:title="Profil"
         android:icon="@drawable/ic_baseline_person_24"/>
+    <item
+        android:id="@+id/programFragment"
+        android:title="Programări"
+        android:icon="@drawable/ic_baseline_date_range_24"/>
 </menu>
