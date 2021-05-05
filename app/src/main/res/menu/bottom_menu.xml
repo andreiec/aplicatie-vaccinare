@@ -6,7 +6,7 @@
         android:title="Descoperă"
         android:icon="@drawable/ic_baseline_explore_24"/>
     <item
-        android:id="@+id/mapFragment"
+        android:id="@+id/mapsFragment"
         android:title="Hartă"
         android:icon="@drawable/ic_baseline_place_24"/>
     <item
@@ -14,7 +14,7 @@
         android:title="Profil"
         android:icon="@drawable/ic_baseline_person_24"/>
     <item
-        android:id="@+id/programFragment"
-        android:title="Programări"
-        android:icon="@drawable/ic_baseline_date_range_24"/>
+        android:id="@+id/settingsFragment"
+        android:title="Setări"
+        android:icon="@drawable/ic_baseline_settings_24"/>
 </menu>

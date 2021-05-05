@@ -10,18 +10,18 @@
         android:label="fragment_explore"
         tools:layout="@layout/fragment_explore" />
     <fragment
-        android:id="@+id/mapFragment"
-        android:name="com.example.aplicatievaccinare.MapFragment"
-        android:label="fragment_map"
-        tools:layout="@layout/fragment_map" />
-    <fragment
         android:id="@+id/profileFragment"
         android:name="com.example.aplicatievaccinare.ProfileFragment"
         android:label="fragment_profile"
         tools:layout="@layout/fragment_profile" />
     <fragment
-        android:id="@+id/programFragment"
-        android:name="com.example.aplicatievaccinare.ProgramFragment"
-        android:label="fragment_program"
-        tools:layout="@layout/fragment_program" />
+        android:id="@+id/settingsFragment"
+        android:name="com.example.aplicatievaccinare.SettingsFragment"
+        android:label="fragment_settings"
+        tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/mapsFragment"
+        android:name="com.example.aplicatievaccinare.MapsFragment"
+        android:label="fragment_maps"
+        tools:layout="@layout/fragment_maps" />
 </navigation>

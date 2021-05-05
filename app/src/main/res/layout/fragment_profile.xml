@@ -46,7 +46,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:orientation="vertical"
-                            android:layout_marginBottom="10dp"
+                            android:layout_marginBottom="5dp"
                             android:gravity="right"
                             tools:ignore="RtlHardcoded">
 
@@ -57,16 +57,16 @@
                                 android:orientation="horizontal"
                                 android:layout_marginRight="20dp"
                                 android:layout_marginLeft="30dp"
-                                android:layout_marginBottom="7dp"
+                                android:layout_marginBottom="10dp"
                                 android:layout_marginTop="25dp"
                                 android:layout_marginEnd="20dp"
                                 android:layout_marginStart="30dp">
 
 
                                 <ImageView
-                                    android:layout_width="95dp"
-                                    android:layout_height="95dp"
-                                    app:srcCompat="@drawable/user_solid"
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    app:srcCompat="@drawable/ic_baseline_person_24"
                                     tools:ignore="VectorDrawableCompat"
                                     android:background="@color/white"
                                     android:scaleType="fitXY"
@@ -113,47 +113,6 @@
                                         android:lineSpacingMultiplier="0.8">
                                     </TextView>
                                 </LinearLayout>
-                            </LinearLayout>
-
-                            <!-- Button Settings -->
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="24dp"
-                                android:background="@drawable/button_rounded"
-                                android:gravity="center"
-                                android:layout_marginBottom="2dp"
-                                style="@style/Widget.AppCompat.Button.Colored"
-                                android:layout_marginRight="25dp"
-                                android:layout_marginEnd="25dp">
-
-                                <!-- Star -->
-                                <View
-                                    android:layout_width="19dp"
-                                    android:layout_height="19dp"
-
-                                    android:background="@drawable/ic_baseline_settings_24"
-
-                                    android:layout_marginRight="4dp"
-                                    android:layout_marginLeft="6dp"
-                                    android:layout_marginEnd="4dp"
-                                    android:layout_marginStart="6dp"
-                                    android:backgroundTint="@color/white">
-                                </View>
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-
-                                    android:fontFamily="@font/poppinsbold"
-                                    android:textSize="13sp"
-                                    android:textColor="@color/white"
-
-                                    android:layout_marginRight="10dp"
-                                    android:layout_marginEnd="10dp"
-                                    android:layout_marginTop="1dp"
-
-                                    android:text="Setări">
-                                </TextView>
                             </LinearLayout>
                         </LinearLayout>
                     </RelativeLayout>
@@ -204,16 +163,129 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
+            <!-- Appointments -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="20dp"
+                app:cardElevation="3dp"
+                app:cardCornerRadius="13dp"
+                android:layout_marginBottom="10dp">
+                <!-- Main Container -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    tools:ignore="UselessParent">
+
+                    <!-- Blue Rounded Corner -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/square_rounded_up_blue"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Programările mele"
+                            android:textColor="@color/white"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginLeft="15dp"
+                            android:layout_marginTop="6dp"
+                            android:layout_marginBottom="2dp">
+                        </TextView>
+
+                    </LinearLayout>
+
+                    <!-- Content for table -->
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/square_rounded_down_white">
+
+                        <TableLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:stretchColumns="0,1,2">
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_column="0"
+                                    android:text="Locație"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip"/>
+                                <TextView
+                                    android:text="Dată"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip" />
+                                <TextView
+                                    android:text="Oră"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip" />
+                            </TableRow>
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_column="0"
+                                    android:text="Spitalul Marie Curie"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip"/>
+                                <TextView
+                                    android:text="12.5.2021"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip" />
+                                <TextView
+                                    android:text="13:00"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip" />
+                            </TableRow>
+
+                            <TableRow>
+                                <TextView
+                                    android:layout_column="0"
+                                    android:text="Spitalul Marie Curie"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip"/>
+                                <TextView
+                                    android:text="26.5.2021"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip" />
+                                <TextView
+                                    android:text="13:00"
+                                    android:gravity="center"
+                                    android:textColor="@color/black_main"
+                                    android:padding="3dip" />
+                            </TableRow>
+
+
+
+                        </TableLayout>
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
             <!-- QR Code Card -->
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="15dp"
                 android:layout_marginRight="20dp"
                 app:cardElevation="3dp"
                 app:cardCornerRadius="13dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="80dp">
 
                 <!-- Main Container -->
                 <LinearLayout
