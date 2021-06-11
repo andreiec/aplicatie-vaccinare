@@ -1,6 +1,7 @@
 package com.example.aplicatievaccinare;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,12 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
+
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Vector;
 
 public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder>{
 
@@ -55,8 +61,8 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked on an image: " + mTitles.get(position));
-                Toast.makeText(mContext, mTitles.get(position), Toast.LENGTH_SHORT).show();
-                Toast.makeText(mContext, mTimes.get(position), Toast.LENGTH_SHORT).show();
+                //TODO Launch new activity with info from article and change HttpReqTask function
+                new HttpReqTask().execute();
             }
         });
     }
@@ -76,6 +82,38 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
             image = itemView.findViewById(R.id.image_view);
             title = itemView.findViewById(R.id.title);
             time = itemView.findViewById(R.id.time);
+        }
+    }
+
+    private class HttpReqTask extends AsyncTask<Void, Void, VaccineCenter[]> {
+
+        @Override
+        protected VaccineCenter[] doInBackground(Void... params) {
+
+            try{
+                String apiUrl = "http://192.168.1.106:8080/centers/44.5/26/";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                VaccineCenter[] vaccineCenters = restTemplate.getForObject(apiUrl, VaccineCenter[].class);
+
+                return vaccineCenters;
+            } catch (Exception e) {
+                Log.e("", e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(VaccineCenter[] vaccineCenters) {
+            super.onPostExecute(vaccineCenters);
+            if (vaccineCenters != null) {
+                for (VaccineCenter center : vaccineCenters){
+                    Log.i("Vaccine center name: ", String.valueOf(center.getName()));
+                }
+            } else {
+                Log.i("Client Error", " No vaccine center in that range");
+            }
+
         }
     }
 }
