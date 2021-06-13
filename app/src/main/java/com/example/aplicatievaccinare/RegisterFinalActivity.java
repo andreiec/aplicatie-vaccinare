@@ -74,13 +74,8 @@ public class RegisterFinalActivity extends AppCompatActivity {
                 user = restTemplate.postForObject(apiUrl, newUser, User.class);
 
                 // After user is registered, save data to local storage
-                SharedPreferences.Editor editor = sp.edit();
-                editor.putLong("id", user.getId());
-                editor.putString("email", user.getEmail());
-                editor.putString("name", user.getName());
-                editor.putString("birthDate", user.getBirthDate().toString());
-                editor.putString("address", user.getAddress());
-                editor.apply();
+                SaveState.user = user;
+                SaveState.saveUserToMemory(mContext);
 
             } catch (Exception e) {
                 Log.e("", Arrays.toString(e.getStackTrace()));

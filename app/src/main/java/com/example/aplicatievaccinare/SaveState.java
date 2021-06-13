@@ -20,6 +20,7 @@ public class SaveState {
         return instance;
     }
 
+    // To save, overwrite user and call saveUserToMemory
     public static void saveUserToMemory(Context context) {
         SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);;
         SharedPreferences.Editor editor = sp.edit();
@@ -32,11 +33,11 @@ public class SaveState {
         Log.i(user.getAddress(), user.getEmail());
     }
 
+    // To save, overwrite token and call saveTokenToMemory
     public static void saveTokenToMemory(Context context) {
         SharedPreferences sp = context.getSharedPreferences("MyUserPrefs", Context.MODE_PRIVATE);;
         SharedPreferences.Editor editor = sp.edit();
         editor.putString("token", token);
         editor.apply();
-        Log.i("TOKEN", token);
     }
 }
