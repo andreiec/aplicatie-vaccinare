@@ -71,7 +71,8 @@
                                     android:background="@color/white"
                                     android:scaleType="fitXY"
                                     app:tint="#3C3C3C"
-                                    android:layout_marginRight="30dp"/>
+                                    android:layout_marginRight="30dp"
+                                    android:layout_gravity="center_vertical"/>
 
 
                                 <Space
@@ -124,13 +125,13 @@
                     <!-- Blue Rounded Square -->
                     <LinearLayout
                         android:layout_width="match_parent"
-                        android:layout_height="105dp"
+                        android:layout_height="wrap_content"
                         android:background="@drawable/square_rounded_down_blue"
                         android:orientation="vertical">
 
                         <TextView
                             android:layout_width="wrap_content"
-                            android:layout_height="75dp"
+                            android:layout_height="wrap_content"
 
                             android:layout_marginRight="50dp"
                             android:layout_marginEnd="50dp"
@@ -146,6 +147,7 @@
                             android:lineSpacingExtra="32dp"
                             android:autoSizeTextType="uniform"
                             android:layout_marginBottom="-5dp"
+                            android:gravity="center_vertical"
 
                             android:text="Constantinescu Andrei-Eduard"
                             android:id="@+id/profile_name">
@@ -162,7 +164,9 @@
                             android:textSize="13sp"
                             android:autoSizeTextType="uniform"
 
-                            android:text="Categoria a III-a, Populația Generală">
+                            android:text="Categoria a III-a, Populația Generală"
+                            android:layout_marginBottom="10dp"
+                            >
                         </TextView>
                     </LinearLayout>
                 </LinearLayout>
@@ -235,42 +239,50 @@
                                     android:padding="3dip" />
                             </TableRow>
 
+                            <!-- Programare -->
                             <TableRow>
                                 <TextView
                                     android:layout_column="0"
                                     android:text="Spitalul Marie Curie"
                                     android:gravity="center"
                                     android:textColor="@color/black_main"
-                                    android:padding="3dip"/>
+                                    android:padding="3dip"
+                                    android:id="@+id/appointment_location"/>
                                 <TextView
                                     android:text="12.5.2021"
                                     android:gravity="center"
                                     android:textColor="@color/black_main"
-                                    android:padding="3dip" />
+                                    android:padding="3dip"
+                                    android:id="@+id/appointment_date"/>
                                 <TextView
                                     android:text="13:00"
                                     android:gravity="center"
                                     android:textColor="@color/black_main"
-                                    android:padding="3dip" />
+                                    android:padding="3dip"
+                                    android:id="@+id/appointment_hour"/>
                             </TableRow>
 
+                            <!-- Rapel -->
                             <TableRow>
                                 <TextView
                                     android:layout_column="0"
                                     android:text="Spitalul Marie Curie"
                                     android:gravity="center"
                                     android:textColor="@color/black_main"
-                                    android:padding="3dip"/>
+                                    android:padding="3dip"
+                                    android:id="@+id/rapel_location"/>
                                 <TextView
                                     android:text="26.5.2021"
                                     android:gravity="center"
                                     android:textColor="@color/black_main"
-                                    android:padding="3dip" />
+                                    android:padding="3dip"
+                                    android:id="@+id/rapel_date"/>
                                 <TextView
                                     android:text="13:00"
                                     android:gravity="center"
                                     android:textColor="@color/black_main"
-                                    android:padding="3dip" />
+                                    android:padding="3dip"
+                                    android:id="@+id/rapel_hour"/>
                             </TableRow>
 
 

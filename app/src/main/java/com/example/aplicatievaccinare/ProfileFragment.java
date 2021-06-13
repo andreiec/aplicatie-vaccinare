@@ -87,8 +87,13 @@ public class ProfileFragment extends Fragment {
             String name = user.getName();
             String address = "Adresă:\n" + user.getAddress();
             String age = "Vârstă: " + Period.between(LocalDate.parse(user.getBirthDateAsString()), LocalDate.now()).getYears() + " ani";
-            String gender = "Sex: M";
 
+            String gender;
+            if (Integer.parseInt(SaveState.getUserFromMemory(requireContext()).getCNP().substring(0, 1)) % 2 == 1) {
+                gender = "Sex: M";
+            } else {
+                gender = "Sex: F";
+            }
 
             profileName.setText(name);
             profileAddress.setText(address);

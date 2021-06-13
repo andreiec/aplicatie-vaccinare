@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:textSize="24dp"
+            android:textSize="24sp"
             android:text="Colegiul National"
             android:textStyle="bold"
             android:textColor="@color/white"
@@ -36,12 +36,11 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:text="Adresa\nStrada Condurache"
         android:textStyle="bold"
         android:textColor="@color/black_main"
-        android:id="@+id/markerAddress"
-        android:layout_alignParentBottom="true"/>
+        android:id="@+id/markerAddress" />
 
     <TextView
         android:layout_width="match_parent"
@@ -49,12 +48,11 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:text="Doze disponibile\n1500"
         android:textStyle="bold"
         android:textColor="@color/black_main"
-        android:id="@+id/markerAvailable"
-        android:layout_alignParentBottom="true"/>
+        android:id="@+id/markerAvailable" />
 
     <TextView
         android:layout_width="match_parent"
@@ -62,12 +60,40 @@
         android:layout_marginLeft="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:text="Vaccin\nAstra Zeneca"
         android:textStyle="bold"
         android:textColor="@color/black_main"
-        android:id="@+id/markerType"
-        android:layout_alignParentBottom="true"/>
+        android:id="@+id/markerType" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="2" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="end"
+        android:layout_marginTop="35dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginBottom="50dp">
+
+        <Button
+            android:layout_width="match_parent"
+            android:paddingTop="10dp"
+            android:layout_height="60dp"
+
+            android:text="Programează-te"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:background="@drawable/input_basic"
+            android:textColor="#FFFFFF"
+
+            android:id="@+id/appointment_button"/>
+    </LinearLayout>
+
 
 
 </LinearLayout>

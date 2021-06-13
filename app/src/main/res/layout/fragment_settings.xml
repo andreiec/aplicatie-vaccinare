@@ -5,10 +5,119 @@
     android:layout_height="match_parent"
     tools:context=".SettingsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Setări"
+        android:textSize="26sp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/white">
+    </TextView>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="200dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:orientation="vertical">
+
+        <!-- Name -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textColorHint="@color/blue_dark">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nume complet"
+                android:ems="10"
+                android:inputType="text"
+                android:background="@color/white"
+                android:textColor="@color/black_main"
+                android:id="@+id/settings_input_name"
+                android:maxLength="45">
+            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- Address -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="16dp"
+
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textColorHint="@color/blue_dark">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Adresă"
+                android:ems="10"
+                android:inputType="text"
+                android:background="@color/white"
+                android:textColor="@color/black_main"
+                android:id="@+id/settings_input_address"
+                android:maxLength="45">
+            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <!-- CNP -->
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginTop="16dp"
+
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:textColorHint="@color/blue_dark">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="CNP"
+                android:ems="10"
+                android:inputType="text"
+                android:background="@color/white"
+                android:textColor="@color/black_main"
+                android:id="@+id/settings_input_CNP"
+                android:maxLength="45">
+            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <Button
+            android:layout_width="match_parent"
+            android:paddingTop="10dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="55dp"
+            android:text="Updatează"
+            android:textSize="20sp"
+            android:textAllCaps="false"
+            android:background="@drawable/input_basic"
+            android:textColor="#FFFFFF"
+            android:id="@+id/settings_button"/>
+    </LinearLayout>
+
 
 </FrameLayout>

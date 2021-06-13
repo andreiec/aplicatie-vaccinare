@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.aplicatievaccinare.classes.RegisterUser;
 import com.example.aplicatievaccinare.classes.UserCreate;
@@ -55,7 +56,19 @@ public class RegisterFinalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Call API to create user
-                new CreateUserHttpReq().execute(inputEmail, inputPassword, inputName.getText().toString(), "2000-01-01", inputAddress.getText().toString(), inputCNP.getText().toString());
+                String dataNastere;
+                if (Integer.parseInt(inputCNP.getText().toString().substring(0, 1)) < 4) {
+                    dataNastere = "19" + inputCNP.getText().toString().substring(1, 3) + "-" + inputCNP.getText().toString().substring(3, 5) + "-" + inputCNP.getText().toString().substring(5, 7);
+                } else {
+                    dataNastere = "20" + inputCNP.getText().toString().substring(1, 3) + "-" + inputCNP.getText().toString().substring(3, 5) + "-" + inputCNP.getText().toString().substring(5, 7);
+                }
+                Log.i("A", inputEmail);
+                Log.i("B", inputPassword);
+                Log.i("C", inputName.getText().toString());
+                Log.i("D", dataNastere);
+                Log.i("E", inputAddress.getText().toString());
+                Log.i("F",  inputCNP.getText().toString());
+                new CreateUserHttpReq().execute(inputEmail, inputPassword, inputName.getText().toString(), dataNastere, inputAddress.getText().toString(), inputCNP.getText().toString());
             }
         });
     }
@@ -93,8 +106,15 @@ public class RegisterFinalActivity extends AppCompatActivity {
 
             Intent i = new Intent(mContext, LoginActivity.class);
             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+            runOnUiThread(() -> {
+                Toast toast = Toast.makeText(getApplicationContext(), "Înregistrare realizată!", Toast.LENGTH_SHORT);
+                toast.show();
+            });
+
             // Change activity to login page
             startActivity(i);
+            finish();
         }
 
     }

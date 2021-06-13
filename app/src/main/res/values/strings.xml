@@ -5,4 +5,6 @@
     <!-- Blue and underlined aici. text -->
     <string name="login_text">Nu ai cont? Înregistrează-te <font color="#477CF6"><u>aici.</u></font> </string>
     <string name="register_text">Ai deja cont? Autentifică-te <font color="#477CF6"><u>aici.</u></font> </string>
+    <string name="user_registered">Înregistrare completă</string>
+    <string name="user_appointed">Programare înregistrată</string>
 </resources>

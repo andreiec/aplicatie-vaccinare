@@ -31,6 +31,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Base64;
 
@@ -118,22 +119,26 @@ public class LoginActivity extends AppCompatActivity {
 
                                     infoResponseString = infoResponseString.substring(1, infoResponseString.length() - 1);
 
-                                    // Nu stiu cum, dar merge
+                                    Log.i("User Info", infoResponseString);
+
+                                    // Nu stiu cum, dar merge (JSON Parse)
                                     String userID = infoResponseString.split(",")[0].split(":")[1];
                                     String userMail = infoResponseString.split(",")[1].split(":")[1];
                                     String userName = infoResponseString.split(",")[2].split(":")[1];
                                     String userBirthDate = infoResponseString.split(",")[3].split(":")[1];
                                     String userAddress = infoResponseString.split(",")[4].split(":")[1];
+                                    String userCNP = infoResponseString.split(",")[5].split(":")[1];
 
                                     userMail = userMail.substring(1, userMail.length() - 1);
                                     userName = userName.substring(1, userName.length() - 1);
                                     userBirthDate = userBirthDate.substring(1, userBirthDate.length() - 1);
                                     userAddress = userAddress.substring(1, userAddress.length() - 1);
+                                    userCNP = userCNP.substring(1, userCNP.length() - 1);
 
-                                    RegisterUser user = new RegisterUser(Long.parseLong(userID), userMail, userName, Date.valueOf(userBirthDate), userAddress);
+                                    RegisterUser user = new RegisterUser(Long.parseLong(userID), userMail, userName, Date.valueOf(userBirthDate), userAddress, userCNP);
 
-                                    SaveState.user = user;
-                                    SaveState.saveUserToMemory(getBaseContext());
+                                    // Save details to storage
+                                    SaveState.saveUserToMemory(getBaseContext(), user);
 
                                     // Change activity to login page
                                     startActivity(i);

@@ -12,6 +12,7 @@ public class RegisterUser {
     private String name;
     private Date birthDate;
     private String address;
+    private String CNP;
 
     public RegisterUser() {
         this.email = "";
@@ -20,12 +21,13 @@ public class RegisterUser {
         this.address = "";
     }
 
-    public RegisterUser(long id, String email, String name, Date birthDate, String address) {
+    public RegisterUser(long id, String email, String name, Date birthDate, String address, String CNP) {
         this.id = id;
         this.email = email;
         this.name = name;
         this.birthDate = birthDate;
         this.address = address;
+        this.CNP = CNP;
     }
 
     public Long getId() {
@@ -71,5 +73,13 @@ public class RegisterUser {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getCNP() {
+        return CNP;
+    }
+
+    public void setCNP(String CNP) {
+        this.CNP = CNP;
     }
 }

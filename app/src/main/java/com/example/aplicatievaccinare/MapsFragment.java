@@ -204,10 +204,7 @@ public class MapsFragment extends Fragment {
             vaccineCenters.clear();
 
             if (vc != null) {
-                for (VaccineCenter center : vc){
-                    Log.i("Vaccine center name", String.valueOf(center.getName()));
-                    vaccineCenters.add(center);
-                }
+                vaccineCenters.addAll(Arrays.asList(vc));
             } else {
                 Log.i("Client Error", "No vaccine center in that range");
             }
