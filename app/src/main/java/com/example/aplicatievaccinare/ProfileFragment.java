@@ -19,12 +19,20 @@ import com.example.aplicatievaccinare.singletons.SaveState;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.Period;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
+import java.util.regex.Pattern;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
 
@@ -36,6 +44,14 @@ public class ProfileFragment extends Fragment {
     TextView profileGender;
     TextView profileAddress;
     TextView profileAge;
+
+    TextView appointmentLocation;
+    TextView appointmentDate;
+    TextView appointmentHour;
+
+    TextView rapelVaccineLocation;
+    TextView rapelVaccineDate;
+    TextView rapelVaccineHour;
 
     private String mParam1;
     private String mParam2;
@@ -81,6 +97,14 @@ public class ProfileFragment extends Fragment {
         profileGender = view.findViewById(R.id.profile_gender);
         profileAge = view.findViewById(R.id.profile_age);
 
+        appointmentLocation = view.findViewById(R.id.appointment_location);
+        appointmentDate = view.findViewById(R.id.appointment_date);
+        appointmentHour = view.findViewById(R.id.appointment_hour);
+
+        rapelVaccineLocation = view.findViewById(R.id.rapel_location);
+        rapelVaccineDate = view.findViewById(R.id.rapel_date);
+        rapelVaccineHour = view.findViewById(R.id.rapel_hour);
+
         try {
             RegisterUser user = SaveState.getUserFromMemory(requireContext());
 
@@ -103,5 +127,70 @@ public class ProfileFragment extends Fragment {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+
+        OkHttpClient client = new OkHttpClient().newBuilder().build();
+        Request request = null;
+
+        try {
+            request = new Request.Builder()
+                    .url("http://192.168.1.106:8080/appointments/" + SaveState.getUserFromMemory(getContext()).getId())
+                    .method("GET", null)
+                    .build();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                e.printStackTrace();
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String r = response.body().string();
+                r = r.substring(1, r.length() - 1);
+
+                // "Time slot not found" < 24, [] < 3
+                if (r.length() > 24) {
+                    Log.i("AAAA", r);
+                    String vaccine = r.split(Pattern.quote("}"))[0];
+                    String rapel = r.split(Pattern.quote("}"))[1];
+
+                    rapel = rapel.substring(2);
+
+                    Log.i("AAAAAAAAA", vaccine);
+                    Log.i("BBBBBBBBB", rapel);
+
+                    // Vaccine
+                    String vaccineDate = vaccine.split(",")[0].split(":")[1];
+                    String vaccineHour = vaccine.split(",")[1].split(":", 2)[1];
+                    String vaccineCenterName = vaccine.split(",")[2].split(":")[1];
+
+                    vaccineDate = vaccineDate.substring(1, vaccineDate.length() - 1);
+                    vaccineHour = vaccineHour.substring(1, vaccineHour.length() - 4);
+                    vaccineCenterName = vaccineCenterName.substring(1, vaccineCenterName.length() - 1);
+
+                    appointmentDate.setText(vaccineDate);
+                    appointmentHour.setText(vaccineHour);
+                    appointmentLocation.setText(vaccineCenterName);
+
+                    // Rapel
+                    String rapelDate = rapel.split(",")[0].split(":")[1];
+                    String rapelHour = rapel.split(",")[1].split(":", 2)[1];
+                    String rapelCenterName = rapel.split(",")[2].split(":")[1];
+
+                    rapelDate = rapelDate.substring(1, rapelDate.length() - 1);
+                    rapelHour = rapelHour.substring(1, rapelHour.length() - 4);
+                    rapelCenterName = rapelCenterName.substring(1, rapelCenterName.length() - 1);
+
+                    rapelVaccineDate.setText(rapelDate);
+                    rapelVaccineHour.setText(rapelHour);
+                    rapelVaccineLocation.setText(rapelCenterName);
+                } else {
+                    //TODO NO APPOINTMENT
+                }
+            }
+        });
     }
 }
