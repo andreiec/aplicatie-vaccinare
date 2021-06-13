@@ -91,7 +91,8 @@
                                         android:minEms="8"
                                         android:text="Vârstă: 20 ani"
                                         android:textColor="@color/black_main"
-                                        android:textSize="18sp">
+                                        android:textSize="18sp"
+                                        android:id="@+id/profile_age">
                                     </TextView>
 
                                     <TextView
@@ -100,17 +101,20 @@
                                         android:text="Sex: M"
                                         android:textColor="@color/black_main"
                                         android:layout_marginTop="-7dp"
-                                        android:textSize="18sp">
+                                        android:textSize="18sp"
+                                        android:id="@+id/profile_gender">
                                     </TextView>
 
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Localitate:\nPopești-Leordeni"
+                                        android:text="Adresă:\nPopești-Leordeni"
+                                        android:maxWidth="200dp"
                                         android:textColor="@color/black_main"
                                         android:layout_marginTop="-7dp"
                                         android:textSize="18sp"
-                                        android:lineSpacingMultiplier="0.8">
+                                        android:lineSpacingMultiplier="0.8"
+                                        android:id="@+id/profile_address">
                                     </TextView>
                                 </LinearLayout>
                             </LinearLayout>
@@ -143,7 +147,8 @@
                             android:autoSizeTextType="uniform"
                             android:layout_marginBottom="-5dp"
 
-                            android:text="Constantinescu\nAndrei-Eduard">
+                            android:text="Constantinescu Andrei-Eduard"
+                            android:id="@+id/profile_name">
                         </TextView>
 
                         <TextView

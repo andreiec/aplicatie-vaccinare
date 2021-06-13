@@ -77,9 +77,9 @@ public class RegisterFinalActivity extends AppCompatActivity {
                 // Save returned info into user to store to local storage (cache)
                 user = restTemplate.postForObject(apiUrl, newUser, RegisterUser.class);
 
-                // After user is registered, save data to local storage
-                SaveState.user = user;
-                SaveState.saveUserToMemory(mContext);
+                // After user is registered, save data to local storage (Dont do it for register, do it for login)
+//                SaveState.user = user;
+//                SaveState.saveUserToMemory(mContext);
 
             } catch (Exception e) {
                 Log.e("", Arrays.toString(e.getStackTrace()));

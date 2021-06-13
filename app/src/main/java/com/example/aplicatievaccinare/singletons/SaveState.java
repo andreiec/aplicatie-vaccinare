@@ -7,9 +7,9 @@ import android.util.Log;
 
 import com.example.aplicatievaccinare.classes.RegisterUser;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 public class SaveState {
 
@@ -34,7 +34,7 @@ public class SaveState {
         editor.putLong("id", user.getId());
         editor.putString("email", user.getEmail());
         editor.putString("name", user.getName());
-        editor.putString("birthDate", user.getBirthDate().toString());
+        editor.putString("birthDate", user.getBirthDateAsString());
         editor.putString("address", user.getAddress());
         editor.apply();
     }
@@ -54,7 +54,7 @@ public class SaveState {
 
         rUser.setId(sp.getLong("id", -1));
         rUser.setAddress(sp.getString("address", ""));
-        rUser.setBirthDate((Date) new SimpleDateFormat("yyyy-MM-dd").parse(sp.getString("birthDate", "")));
+        rUser.setBirthDate(Date.valueOf(sp.getString("birthDate", "")));
         rUser.setEmail(sp.getString("email", ""));
         rUser.setName(sp.getString("name", ""));
 

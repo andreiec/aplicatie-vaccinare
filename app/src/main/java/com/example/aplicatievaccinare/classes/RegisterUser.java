@@ -1,5 +1,8 @@
 package com.example.aplicatievaccinare.classes;
 
+import android.annotation.SuppressLint;
+
+import java.text.SimpleDateFormat;
 import java.sql.Date;
 
 public class RegisterUser {
@@ -51,6 +54,11 @@ public class RegisterUser {
 
     public Date getBirthDate() {
         return birthDate;
+    }
+
+    @SuppressLint("SimpleDateFormat")
+    public String getBirthDateAsString() {
+        return new SimpleDateFormat("yyyy-MM-dd").format(birthDate);
     }
 
     public void setBirthDate(Date birthDate) {

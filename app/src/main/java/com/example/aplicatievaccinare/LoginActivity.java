@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.aplicatievaccinare.classes.LoginUser;
+import com.example.aplicatievaccinare.classes.RegisterUser;
 import com.example.aplicatievaccinare.classes.UserAuth;
 import com.example.aplicatievaccinare.singletons.SaveState;
 import com.fasterxml.jackson.databind.ser.Serializers;
@@ -28,9 +29,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.io.IOException;
+import java.sql.Date;
 import java.util.Arrays;
 import java.util.Base64;
 
+import okhttp3.Call;
+import okhttp3.Callback;
 import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -66,7 +71,78 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new LoginUserHttpReq().execute(inputEmail.getText().toString(), inputPass.getText().toString(), "password", "web");
+                String apiUrl = "http://192.168.1.106:8080/oauth/token";
+
+                // Magic
+                OkHttpClient client = new OkHttpClient().newBuilder().build();
+                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
+                RequestBody body = RequestBody.create(mediaType, "username=" + inputEmail.getText().toString() + "&password=" + inputPass.getText().toString() + "&grant_type=password&scope=web");
+                Request request = new Request.Builder().url(apiUrl).method("POST", body).addHeader("Authorization", "Basic YmFja2VuZDo=").addHeader("Content-Type", "application/x-www-form-urlencoded").build();
+
+                // Call API to get auth token
+                client.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            String responseString = response.body().string();
+
+                            String access_token = responseString.split(",")[0].split(":")[1];
+                            access_token = access_token.substring(1, access_token.length() - 1);
+
+                            Log.d("Logged in with token", access_token);
+                            SaveState.token = access_token;
+                            SaveState.saveTokenToMemory(mContext);
+
+                            Intent i = new Intent(mContext, MainActivity.class);
+                            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                            // Request user info after successful login
+                            Request userInfoRequest = new Request.Builder().url("http://192.168.1.106:8080/users/getByEmail?userEmail=" + inputEmail.getText().toString()).method("GET", null)
+                                    .addHeader("Authorization", "Bearer " + access_token).build();
+
+                            // Call API to get info about user after first api call (Continue login process)
+                            client.newCall(userInfoRequest).enqueue(new Callback() {
+                                @Override
+                                public void onFailure(Call call, IOException e) {
+                                    e.printStackTrace();
+                                }
+
+                                @Override
+                                public void onResponse(Call call, Response response) throws IOException {
+                                    String infoResponseString = response.body().string();
+
+                                    infoResponseString = infoResponseString.substring(1, infoResponseString.length() - 1);
+
+                                    // Nu stiu cum, dar merge
+                                    String userID = infoResponseString.split(",")[0].split(":")[1];
+                                    String userMail = infoResponseString.split(",")[1].split(":")[1];
+                                    String userName = infoResponseString.split(",")[2].split(":")[1];
+                                    String userBirthDate = infoResponseString.split(",")[3].split(":")[1];
+                                    String userAddress = infoResponseString.split(",")[4].split(":")[1];
+
+                                    userMail = userMail.substring(1, userMail.length() - 1);
+                                    userName = userName.substring(1, userName.length() - 1);
+                                    userBirthDate = userBirthDate.substring(1, userBirthDate.length() - 1);
+                                    userAddress = userAddress.substring(1, userAddress.length() - 1);
+
+                                    RegisterUser user = new RegisterUser(Long.parseLong(userID), userMail, userName, Date.valueOf(userBirthDate), userAddress);
+
+                                    SaveState.user = user;
+                                    SaveState.saveUserToMemory(getBaseContext());
+
+                                    // Change activity to login page
+                                    startActivity(i);
+                                    finish();
+                                }
+                            });
+                        }
+                    }
+                });
             }
         });
 
@@ -78,68 +154,5 @@ public class LoginActivity extends AppCompatActivity {
                 finish();
             }
         });
-    }
-
-    public class LoginUserHttpReq extends AsyncTask<String, Void, Void> {
-
-        LoginUser user = null;
-
-        @RequiresApi(api = Build.VERSION_CODES.O)
-        @Override
-        protected Void doInBackground(String... params) {
-            try{
-                String apiUrl = "http://192.168.1.106:8080/oauth/token";
-                RestTemplate restTemplate = new RestTemplate();
-                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-
-                OkHttpClient client = new OkHttpClient().newBuilder().build();
-                MediaType mediaType = MediaType.parse("application/x-www-form-urlencoded");
-                RequestBody body = RequestBody.create(mediaType, "username=" + params[0] + "&password=" + params[1] + "&grant_type=" + params[2] + "&scope=" + params[3]);
-                Request request = new Request.Builder().url(apiUrl).method("POST", body).addHeader("Authorization", "Basic YmFja2VuZDo=").addHeader("Content-Type", "application/x-www-form-urlencoded").build();
-                Response response = client.newCall(request).execute();
-
-                // Save returned info into login user to save token
-                //user = restTemplate.postForObject(apiUrl, newUser, LoginUser.class);
-
-                Log.i("???", String.valueOf(response.body()));
-//                String plainCreds = "backend:";
-//                byte[] plainCredsBytes = plainCreds.getBytes();
-//                byte[] base64CredsBytes = Base64.getEncoder().encode(plainCredsBytes);
-//                String base64Creds = new String(base64CredsBytes);
-//
-//                HttpHeaders headers = new HttpHeaders();
-//                headers.add("Authorization", "Basic " + base64Creds);
-//                headers.setContentType(MediaType.APPLICATION_JSON);
-//                Log.i("COD", base64Creds);
-//
-//                //JSONObject requestJson = new JSONObject();
-//
-//                //TODO AUTENTIFICARE CU 'backend' si '' DOAMNE AJUTA
-//                HttpEntity<UserAuth> request = new HttpEntity<UserAuth>(newUser, headers);
-//                ResponseEntity<LoginUser> response = restTemplate.exchange(apiUrl, HttpMethod.POST, request, LoginUser.class);
-                //user = response.getBody();
-                Log.i("LOGGED IN", user.getToken());
-
-                // After user is logged in, save token to local storage
-                SaveState.token = user.getToken();
-                SaveState.saveTokenToMemory(mContext);
-                Log.i("TOKEN", SaveState.token);
-
-            } catch (Exception e) {
-                Log.e("", Arrays.toString(e.getStackTrace()));
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(Void ac) {
-            super.onPostExecute(ac);
-
-            Intent i = new Intent(mContext, MainActivity.class);
-            i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-            // Change activity to login page
-            startActivity(i);
-            finish();
-        }
     }
 }

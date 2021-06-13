@@ -14,6 +14,7 @@ import android.view.ViewGroup;
 
 import com.example.aplicatievaccinare.classes.ArticleListing;
 import com.example.aplicatievaccinare.classes.RecyclerViewAdapter;
+import com.example.aplicatievaccinare.singletons.SaveState;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
