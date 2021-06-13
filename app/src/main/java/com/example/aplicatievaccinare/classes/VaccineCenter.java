@@ -1,4 +1,4 @@
-package com.example.aplicatievaccinare;
+package com.example.aplicatievaccinare.classes;
 
 public class VaccineCenter {
     private long id;

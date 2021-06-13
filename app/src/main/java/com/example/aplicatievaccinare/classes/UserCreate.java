@@ -1,4 +1,4 @@
-package com.example.aplicatievaccinare;
+package com.example.aplicatievaccinare.classes;
 
 public class UserCreate {
     private String email;

@@ -1,8 +1,8 @@
-package com.example.aplicatievaccinare;
+package com.example.aplicatievaccinare.classes;
 
 import java.sql.Date;
 
-public class User {
+public class RegisterUser {
     private Long id;
 
     private String email;
@@ -10,14 +10,14 @@ public class User {
     private Date birthDate;
     private String address;
 
-    public User() {
+    public RegisterUser() {
         this.email = "";
         this.name = "";
         this.birthDate = new Date(999999);
         this.address = "";
     }
 
-    public User(long id, String email, String name, Date birthDate, String address) {
+    public RegisterUser(long id, String email, String name, Date birthDate, String address) {
         this.id = id;
         this.email = email;
         this.name = name;

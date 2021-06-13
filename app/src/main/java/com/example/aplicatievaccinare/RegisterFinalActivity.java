@@ -12,6 +12,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.aplicatievaccinare.classes.RegisterUser;
+import com.example.aplicatievaccinare.classes.UserCreate;
+import com.example.aplicatievaccinare.singletons.SaveState;
+
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
@@ -58,7 +62,7 @@ public class RegisterFinalActivity extends AppCompatActivity {
 
     public class CreateUserHttpReq extends AsyncTask<String, Void, Void> {
 
-        User user = null;
+        RegisterUser user = null;
 
         @Override
         protected Void doInBackground(String... params) {
@@ -71,7 +75,7 @@ public class RegisterFinalActivity extends AppCompatActivity {
                 UserCreate newUser = new UserCreate(params[0], params[1], params[2], params[3], params[4], params[5]);
 
                 // Save returned info into user to store to local storage (cache)
-                user = restTemplate.postForObject(apiUrl, newUser, User.class);
+                user = restTemplate.postForObject(apiUrl, newUser, RegisterUser.class);
 
                 // After user is registered, save data to local storage
                 SaveState.user = user;
