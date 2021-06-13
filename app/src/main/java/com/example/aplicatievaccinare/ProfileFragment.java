@@ -158,8 +158,13 @@ public class ProfileFragment extends Fragment {
                 // "Time slot not found" < 24, [] < 3
                 if (r.length() > 24) {
 
-                    appointmentTab.setVisibility(View.VISIBLE);
-                    noAppointmentText.setVisibility(View.GONE);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            appointmentTab.setVisibility(View.VISIBLE);
+                            noAppointmentText.setVisibility(View.GONE);
+                        }
+                    });
 
                     String vaccine = r.split(Pattern.quote("}"))[0];
                     String rapel = r.split(Pattern.quote("}"))[1];
@@ -193,8 +198,13 @@ public class ProfileFragment extends Fragment {
                     rapelVaccineLocation.setText(rapelCenterName);
                 } else if (r.length() < 5) {
                     // If no appointment is made
-                    noAppointmentText.setVisibility(View.VISIBLE);
-                    appointmentTab.setVisibility(View.GONE);
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            appointmentTab.setVisibility(View.GONE);
+                            noAppointmentText.setVisibility(View.VISIBLE);
+                        }
+                    });
                 }
             }
         });

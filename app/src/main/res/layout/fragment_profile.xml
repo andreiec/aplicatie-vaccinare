@@ -90,7 +90,7 @@
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:minEms="8"
-                                        android:text="Vârstă: 20 ani"
+                                        android:text="Vârstă: ani"
                                         android:textColor="@color/black_main"
                                         android:textSize="18sp"
                                         android:id="@+id/profile_age">
@@ -99,7 +99,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Sex: M"
+                                        android:text="Sex:"
                                         android:textColor="@color/black_main"
                                         android:layout_marginTop="-7dp"
                                         android:textSize="18sp"
@@ -109,7 +109,7 @@
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:text="Adresă:\nPopești-Leordeni"
+                                        android:text="Adresă:\n"
                                         android:maxWidth="200dp"
                                         android:textColor="@color/black_main"
                                         android:layout_marginTop="-7dp"
@@ -149,7 +149,7 @@
                             android:layout_marginBottom="-5dp"
                             android:gravity="center_vertical"
 
-                            android:text="Constantinescu Andrei-Eduard"
+                            android:text=""
                             android:id="@+id/profile_name">
                         </TextView>
 
@@ -261,19 +261,19 @@
                                 <TableRow>
                                     <TextView
                                         android:layout_column="0"
-                                        android:text="Spitalul Marie Curie"
+                                        android:text=""
                                         android:gravity="center"
                                         android:textColor="@color/black_main"
                                         android:padding="3dip"
                                         android:id="@+id/appointment_location"/>
                                     <TextView
-                                        android:text="12.5.2021"
+                                        android:text=""
                                         android:gravity="center"
                                         android:textColor="@color/black_main"
                                         android:padding="3dip"
                                         android:id="@+id/appointment_date"/>
                                     <TextView
-                                        android:text="13:00"
+                                        android:text=""
                                         android:gravity="center"
                                         android:textColor="@color/black_main"
                                         android:padding="3dip"
@@ -284,19 +284,19 @@
                                 <TableRow>
                                     <TextView
                                         android:layout_column="0"
-                                        android:text="Spitalul Marie Curie"
+                                        android:text=""
                                         android:gravity="center"
                                         android:textColor="@color/black_main"
                                         android:padding="3dip"
                                         android:id="@+id/rapel_location"/>
                                     <TextView
-                                        android:text="26.5.2021"
+                                        android:text=""
                                         android:gravity="center"
                                         android:textColor="@color/black_main"
                                         android:padding="3dip"
                                         android:id="@+id/rapel_date"/>
                                     <TextView
-                                        android:text="13:00"
+                                        android:text=""
                                         android:gravity="center"
                                         android:textColor="@color/black_main"
                                         android:padding="3dip"

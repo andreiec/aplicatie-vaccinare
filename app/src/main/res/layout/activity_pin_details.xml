@@ -22,7 +22,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:textSize="24sp"
-            android:text="Colegiul National"
+            android:text=""
             android:textStyle="bold"
             android:textColor="@color/white"
             android:id="@+id/markerText"
@@ -37,7 +37,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:textSize="18sp"
-        android:text="Adresa\nStrada Condurache"
+        android:text="Adresa\n"
         android:textStyle="bold"
         android:textColor="@color/black_main"
         android:id="@+id/markerAddress" />
@@ -49,7 +49,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:textSize="18sp"
-        android:text="Doze disponibile\n1500"
+        android:text="Doze disponibile\n"
         android:textStyle="bold"
         android:textColor="@color/black_main"
         android:id="@+id/markerAvailable" />
@@ -61,7 +61,7 @@
         android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
         android:textSize="18sp"
-        android:text="Vaccin\nAstra Zeneca"
+        android:text="Vaccin\n"
         android:textStyle="bold"
         android:textColor="@color/black_main"
         android:id="@+id/markerType" />
