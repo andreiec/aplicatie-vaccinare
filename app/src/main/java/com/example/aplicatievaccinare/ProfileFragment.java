@@ -1,6 +1,5 @@
 package com.example.aplicatievaccinare;
 
-import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 
@@ -8,24 +7,21 @@ import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
+import android.widget.TableLayout;
 import android.widget.TextView;
 
 import com.example.aplicatievaccinare.classes.RegisterUser;
 import com.example.aplicatievaccinare.singletons.SaveState;
 
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.Period;
-import java.time.ZoneId;
-import java.util.Date;
-import java.util.Objects;
 import java.util.regex.Pattern;
 
 import okhttp3.Call;
@@ -52,6 +48,10 @@ public class ProfileFragment extends Fragment {
     TextView rapelVaccineLocation;
     TextView rapelVaccineDate;
     TextView rapelVaccineHour;
+
+    TextView noAppointmentText;
+
+    TableLayout appointmentTab;
 
     private String mParam1;
     private String mParam2;
@@ -105,6 +105,10 @@ public class ProfileFragment extends Fragment {
         rapelVaccineDate = view.findViewById(R.id.rapel_date);
         rapelVaccineHour = view.findViewById(R.id.rapel_hour);
 
+        noAppointmentText = view.findViewById(R.id.appointment_no_text);
+
+        appointmentTab = view.findViewById(R.id.appointment_table);
+
         try {
             RegisterUser user = SaveState.getUserFromMemory(requireContext());
 
@@ -153,14 +157,14 @@ public class ProfileFragment extends Fragment {
 
                 // "Time slot not found" < 24, [] < 3
                 if (r.length() > 24) {
-                    Log.i("AAAA", r);
+
+                    appointmentTab.setVisibility(View.VISIBLE);
+                    noAppointmentText.setVisibility(View.GONE);
+
                     String vaccine = r.split(Pattern.quote("}"))[0];
                     String rapel = r.split(Pattern.quote("}"))[1];
 
                     rapel = rapel.substring(2);
-
-                    Log.i("AAAAAAAAA", vaccine);
-                    Log.i("BBBBBBBBB", rapel);
 
                     // Vaccine
                     String vaccineDate = vaccine.split(",")[0].split(":")[1];
@@ -187,8 +191,10 @@ public class ProfileFragment extends Fragment {
                     rapelVaccineDate.setText(rapelDate);
                     rapelVaccineHour.setText(rapelHour);
                     rapelVaccineLocation.setText(rapelCenterName);
-                } else {
-                    //TODO NO APPOINTMENT
+                } else if (r.length() < 5) {
+                    // If no appointment is made
+                    noAppointmentText.setVisibility(View.VISIBLE);
+                    appointmentTab.setVisibility(View.GONE);
                 }
             }
         });

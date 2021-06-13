@@ -181,7 +181,9 @@
                 android:layout_marginRight="20dp"
                 app:cardElevation="3dp"
                 app:cardCornerRadius="13dp"
-                android:layout_marginBottom="10dp">
+                android:layout_marginBottom="10dp"
+                android:id="@+id/appointment_tab">
+
                 <!-- Main Container -->
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -215,79 +217,94 @@
                         android:layout_height="wrap_content"
                         android:background="@drawable/square_rounded_down_white">
 
-                        <TableLayout
+                        <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:stretchColumns="0,1,2">
+                            android:orientation="vertical">
+                            <TextView
+                                android:layout_marginTop="10dp"
+                                android:layout_marginBottom="12dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Momentan nu există vreo programare!"
+                                android:textColor="@color/black_main"
+                                android:layout_gravity="center"
+                                android:id="@+id/appointment_no_text">
+                            </TextView>
 
-                            <TableRow>
-                                <TextView
-                                    android:layout_column="0"
-                                    android:text="Locație"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip"/>
-                                <TextView
-                                    android:text="Dată"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip" />
-                                <TextView
-                                    android:text="Oră"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip" />
-                            </TableRow>
+                            <TableLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:stretchColumns="0,1,2"
+                                android:id="@+id/appointment_table">
 
-                            <!-- Programare -->
-                            <TableRow>
-                                <TextView
-                                    android:layout_column="0"
-                                    android:text="Spitalul Marie Curie"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip"
-                                    android:id="@+id/appointment_location"/>
-                                <TextView
-                                    android:text="12.5.2021"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip"
-                                    android:id="@+id/appointment_date"/>
-                                <TextView
-                                    android:text="13:00"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip"
-                                    android:id="@+id/appointment_hour"/>
-                            </TableRow>
+                                <TableRow>
+                                    <TextView
+                                        android:layout_column="0"
+                                        android:text="Locație"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip"/>
+                                    <TextView
+                                        android:text="Dată"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip" />
+                                    <TextView
+                                        android:text="Oră"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip" />
+                                </TableRow>
 
-                            <!-- Rapel -->
-                            <TableRow>
-                                <TextView
-                                    android:layout_column="0"
-                                    android:text="Spitalul Marie Curie"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip"
-                                    android:id="@+id/rapel_location"/>
-                                <TextView
-                                    android:text="26.5.2021"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip"
-                                    android:id="@+id/rapel_date"/>
-                                <TextView
-                                    android:text="13:00"
-                                    android:gravity="center"
-                                    android:textColor="@color/black_main"
-                                    android:padding="3dip"
-                                    android:id="@+id/rapel_hour"/>
-                            </TableRow>
+                                <!-- Programare -->
+                                <TableRow>
+                                    <TextView
+                                        android:layout_column="0"
+                                        android:text="Spitalul Marie Curie"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip"
+                                        android:id="@+id/appointment_location"/>
+                                    <TextView
+                                        android:text="12.5.2021"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip"
+                                        android:id="@+id/appointment_date"/>
+                                    <TextView
+                                        android:text="13:00"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip"
+                                        android:id="@+id/appointment_hour"/>
+                                </TableRow>
 
+                                <!-- Rapel -->
+                                <TableRow>
+                                    <TextView
+                                        android:layout_column="0"
+                                        android:text="Spitalul Marie Curie"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip"
+                                        android:id="@+id/rapel_location"/>
+                                    <TextView
+                                        android:text="26.5.2021"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip"
+                                        android:id="@+id/rapel_date"/>
+                                    <TextView
+                                        android:text="13:00"
+                                        android:gravity="center"
+                                        android:textColor="@color/black_main"
+                                        android:padding="3dip"
+                                        android:id="@+id/rapel_hour"/>
+                                </TableRow>
+                            </TableLayout>
+                        </LinearLayout>
 
-
-                        </TableLayout>
 
                     </RelativeLayout>
                 </LinearLayout>
