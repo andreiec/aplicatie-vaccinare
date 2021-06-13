@@ -38,16 +38,18 @@
                 android:layout_marginTop="90dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="170dp"
+                    android:layout_height="30dp"
                     android:layout_marginLeft="12dp"
                     android:layout_marginStart="12dp"
                     android:layout_marginTop="5dp"
                     android:layout_marginBottom="-10dp"
 
+                    android:ellipsize="end"
                     android:textSize="16.5sp"
                     android:textColor="@color/white"
                     android:fontFamily="@font/poppinsbold"
+                    android:maxLines="1"
 
                     android:id="@+id/title"
                     android:text="Text exemplu">

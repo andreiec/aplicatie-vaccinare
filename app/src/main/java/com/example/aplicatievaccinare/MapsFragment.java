@@ -14,7 +14,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
-import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
@@ -32,20 +32,19 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.tasks.Task;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class MapsFragment extends Fragment {
 
     private static final String TAG = "MapsActivity";
     private GoogleMap mMap;
 
-    ArrayList<LatLng> pinsLocation = new ArrayList<LatLng>();
-
-    LatLng popesti = new LatLng(44.37733244317854, 26.150120022988286);
-    LatLng grozavesti = new LatLng(44.44378696743165, 26.064403963455387);
-    LatLng titan = new LatLng(44.4221676193898, 26.180229258037222);
+    private ArrayList<VaccineCenter> vaccineCenters = new ArrayList<>();
 
     private int ACCESS_LOCATION_REQUEST_CODE = 10001;
 
@@ -54,18 +53,12 @@ public class MapsFragment extends Fragment {
         @Override
         public void onMapReady(GoogleMap googleMap) {
             mMap = googleMap;
+            new HttpMapPinRequest().execute();
 
-            pinsLocation.add(popesti);
-            pinsLocation.add(grozavesti);
-            pinsLocation.add(titan);
+            // Default camera position
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(44.43, 26.1), 12F));
 
-            for (LatLng pin : pinsLocation) {
-                mMap.addMarker(new MarkerOptions().position(pin).title("Centru de Vaccinare")).setIcon(bitmapDescriptorFromVector(requireContext(), R.drawable.ic_baseline_cross));
-            }
-
-            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(popesti, 12F));
-
-            //TODO REZOLVA
+            //TODO rezolva Style ul
             mMap.setMapStyle(MapStyleOptions.loadRawResourceStyle(requireContext(), R.raw.map_style));
 
             if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -81,18 +74,42 @@ public class MapsFragment extends Fragment {
             mMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
                 @Override
                 public boolean onMarkerClick(Marker marker) {
-                    String title = "HAKUNA MATATA";
 
-                    Intent i = new Intent(getActivity(), PinDetailsActivity.class);
-                    i.putExtra("title", title);
+                    // Loop through all markers to find the right one
+                    VaccineCenter currentVaccineCenter = new VaccineCenter();
 
-                    // Implementation for waiting 1 second
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        public void run() {
-                            startActivity(i);
+                    for (VaccineCenter vaccineCenter : vaccineCenters) {
+                        if (vaccineCenter.getName().equals(marker.getTitle())) {
+                            currentVaccineCenter.setId(vaccineCenter.getId());
+                            currentVaccineCenter.setName(vaccineCenter.getName());
+                            currentVaccineCenter.setAddress(vaccineCenter.getAddress());
+                            currentVaccineCenter.setDosesAvailable(vaccineCenter.getDosesAvailable());
+                            currentVaccineCenter.setLatitude(vaccineCenter.getLatitude());
+                            currentVaccineCenter.setLongitude(vaccineCenter.getLongitude());
+                            currentVaccineCenter.setVaccineTypeBrand(vaccineCenter.getVaccineTypeBrand());
+                            break;
                         }
-                    }, 600);
+                    }
+
+                    try {
+                        Intent i = new Intent(getActivity(), PinDetailsActivity.class);
+                        i.putExtra("id", currentVaccineCenter.getId());
+                        i.putExtra("title", currentVaccineCenter.getName());
+                        i.putExtra("available", String.valueOf(currentVaccineCenter.getDosesAvailable()));
+                        i.putExtra("type", currentVaccineCenter.getVaccineTypeBrand());
+                        i.putExtra("address", currentVaccineCenter.getAddress());
+
+                        // Implementation for waiting 0.5 second
+                        Handler handler = new Handler();
+                        handler.postDelayed(new Runnable() {
+                            public void run() {
+                                startActivity(i);
+                            }
+                        }, 500);
+                    } catch (Exception e) {
+                        Log.i("Not found", Arrays.toString(e.getStackTrace()));
+                    }
+
 
                     //handler.removeCallbacksAndMessages(null);
 
@@ -102,6 +119,11 @@ public class MapsFragment extends Fragment {
         }
     };
 
+    private void addMarkersAfterAPICall() {
+        for (VaccineCenter vaccineCenter : vaccineCenters) {
+            mMap.addMarker(new MarkerOptions().position(new LatLng(vaccineCenter.getLatitude(), vaccineCenter.getLongitude())).title(vaccineCenter.getName())).setIcon(bitmapDescriptorFromVector(requireContext(), R.drawable.ic_baseline_cross));
+        }
+    }
 
     @Nullable
     @Override
@@ -153,6 +175,43 @@ public class MapsFragment extends Fragment {
             } else {
                 Log.i("No location", "Access");
             }
+        }
+    }
+
+    // API Request to gett all vaccine centers
+    private class HttpMapPinRequest extends AsyncTask<Void, Void, VaccineCenter[]> {
+
+        @Override
+        protected VaccineCenter[] doInBackground(Void... params) {
+
+            try{
+                String apiUrl = "http://192.168.1.106:8080/centers/";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                VaccineCenter[] vaccineCenters = restTemplate.getForObject(apiUrl, VaccineCenter[].class);
+
+                return vaccineCenters;
+            } catch (Exception e) {
+                Log.e("", e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(VaccineCenter[] vc) {
+            super.onPostExecute(vc);
+            vaccineCenters.clear();
+
+            if (vc != null) {
+                for (VaccineCenter center : vc){
+                    Log.i("Vaccine center name", String.valueOf(center.getName()));
+                    vaccineCenters.add(center);
+                }
+            } else {
+                Log.i("Client Error", "No vaccine center in that range");
+            }
+
+            addMarkersAfterAPICall();
         }
     }
 }

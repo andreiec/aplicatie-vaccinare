@@ -1,5 +1,6 @@
 package com.example.aplicatievaccinare;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -11,6 +12,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 
@@ -26,14 +30,16 @@ public class ExploreFragment extends Fragment {
     private ArrayList<String> mTimesNews = new ArrayList<>();
     private ArrayList<String> mImageUrlsNews = new ArrayList<>();
 
-    // TODO: Rename parameter arguments, choose names that match
+    private ArrayList<ArticleListing> articleListings = new ArrayList<>();
+    private ArrayList<ArticleListing> infoListings = new ArrayList<>();
+    private ArrayList<ArticleListing> newsListings = new ArrayList<>();
+
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
     private View view;
 
-    // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
@@ -41,7 +47,6 @@ public class ExploreFragment extends Fragment {
         // Required empty public constructor
     }
 
-    // TODO: Rename and change types and number of parameters
     public static ExploreFragment newInstance(String param1, String param2) {
         ExploreFragment fragment = new ExploreFragment();
         Bundle args = new Bundle();
@@ -64,64 +69,35 @@ public class ExploreFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         view = inflater.inflate(R.layout.fragment_explore, container, false);
 
-        getImagesInfo();
-        getImagesNews();
+        // Call API
+        new HttpArticlesRequest().execute();
 
         return view;
     }
-    private void getImagesInfo() {
+
+    private void getImages() {
         Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
 
-        mImageUrlsInfo.add("https://i.imgur.com/Wwx25wY.jpg");
-        mTitlesInfo.add("Test 1");
-        mTimesInfo.add("x minute");
+        for (ArticleListing articleListing : articleListings) {
+            if (articleListing.getType() == 1) {
+                mImageUrlsInfo.add(articleListing.getPicture());
+                mTitlesInfo.add(articleListing.getTitle());
+                mTimesInfo.add(articleListing.getReadingTime() + " minute");
+                infoListings.add(articleListing);
+            } else {
+                mImageUrlsNews.add(articleListing.getPicture());
+                mTitlesNews.add(articleListing.getTitle());
+                mTimesNews.add(articleListing.getReadingTime() + " minute");
+                newsListings.add(articleListing);
+            }
 
-        mImageUrlsInfo.add("https://i.imgur.com/Wwx25wY.jpg");
-        mTitlesInfo.add("Test 12");
-        mTimesInfo.add("x2 minute");
-
-        mImageUrlsInfo.add("https://i.imgur.com/Wwx25wY.jpg");
-        mTitlesInfo.add("Test 13");
-        mTimesInfo.add("x3 minute");
-
-        mImageUrlsInfo.add("https://i.imgur.com/Wwx25wY.jpg");
-        mTitlesInfo.add("Test 14");
-        mTimesInfo.add("x4 minute");
-
-        initRecyclerViewInfo();
-    }
-
-    private void getImagesNews() {
-        Log.d(TAG, "initImageBitmaps: preparing bitmaps.");
-
-        mImageUrlsNews.add("https://i.imgur.com/cH3a6Ye.png");
-        mTitlesNews.add("Test 2");
-        mTimesNews.add("x2 minute");
-
-        mImageUrlsNews.add("https://i.imgur.com/cH3a6Ye.png");
-        mTitlesNews.add("Test 22");
-        mTimesNews.add("x4 minute");
-
-        mImageUrlsNews.add("https://i.imgur.com/cH3a6Ye.png");
-        mTitlesNews.add("Test 23");
-        mTimesNews.add("x5 minute");
-
-        mImageUrlsNews.add("https://i.imgur.com/cH3a6Ye.png");
-        mTitlesNews.add("Test 24");
-        mTimesNews.add("x6 minute");
-
-        mImageUrlsNews.add("https://i.imgur.com/cH3a6Ye.png");
-        mTitlesNews.add("Test 25");
-        mTimesNews.add("x8 minute");
-
-        mImageUrlsNews.add("https://i.imgur.com/cH3a6Ye.png");
-        mTitlesNews.add("Test 26");
-        mTimesNews.add("x10 minute");
+        }
 
         initRecyclerViewNews();
+        initRecyclerViewInfo();
     }
 
     private void initRecyclerViewInfo() {
@@ -132,7 +108,7 @@ public class ExploreFragment extends Fragment {
         RecyclerView recyclerViewInfo = (RecyclerView) view.findViewById(R.id.recyclerViewInfo);
         recyclerViewInfo.setLayoutManager(layoutManager);
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), mTitlesInfo, mTimesInfo, mImageUrlsInfo);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), mTitlesInfo, mTimesInfo, mImageUrlsInfo, infoListings);
         recyclerViewInfo.setAdapter(adapter);
     }
 
@@ -144,8 +120,45 @@ public class ExploreFragment extends Fragment {
         RecyclerView recyclerViewInfo = (RecyclerView) view.findViewById(R.id.recyclerViewNews);
         recyclerViewInfo.setLayoutManager(layoutManager);
 
-        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), mTitlesNews, mTimesNews, mImageUrlsNews);
+        RecyclerViewAdapter adapter = new RecyclerViewAdapter(getActivity(), mTitlesNews, mTimesNews, mImageUrlsNews, newsListings);
         recyclerViewInfo.setAdapter(adapter);
     }
 
+    // API Request to gett all vaccine centers
+    private class HttpArticlesRequest extends AsyncTask<Void, Void, ArticleListing[]> {
+
+        @Override
+        protected ArticleListing[] doInBackground(Void... params) {
+
+            try{
+                String apiUrl = "http://192.168.1.106:8080/articles/";
+                RestTemplate restTemplate = new RestTemplate();
+                restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
+                ArticleListing[] articleListings = restTemplate.getForObject(apiUrl, ArticleListing[].class);
+
+                return articleListings;
+            } catch (Exception e) {
+                Log.e("", e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArticleListing[] ac) {
+            super.onPostExecute(ac);
+            articleListings.clear();
+
+            if (ac != null) {
+                for (ArticleListing articleListing : ac){
+                    Log.i("Article Listing", String.valueOf(articleListing.getTitle()));
+                    articleListings.add(articleListing);
+                }
+            } else {
+                Log.i("Client Error", "No articles found");
+            }
+
+            // After API call function to put articles in app
+            getImages();
+        }
+    }
 }

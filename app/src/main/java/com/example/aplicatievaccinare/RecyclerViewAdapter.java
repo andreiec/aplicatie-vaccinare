@@ -1,6 +1,7 @@
 package com.example.aplicatievaccinare;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +19,9 @@ import com.bumptech.glide.Glide;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.web.client.RestTemplate;
 
+import java.lang.ref.WeakReference;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
@@ -30,12 +33,14 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
     private ArrayList<String> mTimes;
     private ArrayList<String> mImageUrls;
     private Context mContext;
+    private ArrayList<ArticleListing> articleListings;
 
-    public RecyclerViewAdapter(Context context, ArrayList<String> titles, ArrayList<String> times, ArrayList<String> imageUrls) {
+    public RecyclerViewAdapter(Context context, ArrayList<String> titles, ArrayList<String> times, ArrayList<String> imageUrls, ArrayList<ArticleListing> listings) {
         mTitles = titles;
         mTimes = times;
         mImageUrls = imageUrls;
         mContext = context;
+        articleListings = listings;
     }
 
     @NonNull
@@ -61,8 +66,9 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clicked on an image: " + mTitles.get(position));
-                //TODO Launch new activity with info from article and change HttpReqTask function
-                new HttpReqTask().execute();
+
+                // Call API for click on article
+                new HttpReqTask().execute(articleListings.get(position).getId());
             }
         });
     }
@@ -85,18 +91,18 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
         }
     }
 
-    private class HttpReqTask extends AsyncTask<Void, Void, VaccineCenter[]> {
+    private class HttpReqTask extends AsyncTask<Integer, Void, Article> {
 
         @Override
-        protected VaccineCenter[] doInBackground(Void... params) {
+        protected Article doInBackground(Integer... id) {
 
             try{
-                String apiUrl = "http://192.168.1.106:8080/centers/44.5/26/";
+                String apiUrl = "http://192.168.1.106:8080/articles/" + id[0];
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
-                VaccineCenter[] vaccineCenters = restTemplate.getForObject(apiUrl, VaccineCenter[].class);
+                Article article = restTemplate.getForObject(apiUrl, Article.class);
 
-                return vaccineCenters;
+                return article;
             } catch (Exception e) {
                 Log.e("", e.getMessage());
             }
@@ -104,16 +110,24 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
         }
 
         @Override
-        protected void onPostExecute(VaccineCenter[] vaccineCenters) {
-            super.onPostExecute(vaccineCenters);
-            if (vaccineCenters != null) {
-                for (VaccineCenter center : vaccineCenters){
-                    Log.i("Vaccine center name: ", String.valueOf(center.getName()));
+        protected void onPostExecute(Article article) {
+            super.onPostExecute(article);
+            if (article != null) {
+                try {
+                    Intent i = new Intent(mContext, ArticlePageActivity.class);
+                    i.putExtra("title", article.getTitle());
+                    i.putExtra("id", article.getId());
+                    i.putExtra("picture", article.getPicture());
+                    i.putExtra("body", article.getBody());
+                    i.putExtra("readingTime", article.getReadingTime());
+                    i.putExtra("type", article.getType());
+                    mContext.startActivity(i);
+                } catch (Exception e) {
+                    Log.i("Not found", Arrays.toString(e.getStackTrace()));
                 }
             } else {
-                Log.i("Client Error", " No vaccine center in that range");
+                Log.i("API Error", "Could not get requested article.");
             }
-
         }
     }
 }

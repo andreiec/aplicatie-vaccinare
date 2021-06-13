@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".PinDetailsActivity">
+    tools:context=".PinDetailsActivity"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,14 +20,54 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:textSize="24dp"
             android:text="Colegiul National"
             android:textStyle="bold"
             android:textColor="@color/white"
-            android:id="@+id/marker"
+            android:id="@+id/markerText"
             android:layout_alignParentBottom="true"/>
 
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:textSize="18dp"
+        android:text="Adresa\nStrada Condurache"
+        android:textStyle="bold"
+        android:textColor="@color/black_main"
+        android:id="@+id/markerAddress"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:textSize="18dp"
+        android:text="Doze disponibile\n1500"
+        android:textStyle="bold"
+        android:textColor="@color/black_main"
+        android:id="@+id/markerAvailable"
+        android:layout_alignParentBottom="true"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:textSize="18dp"
+        android:text="Vaccin\nAstra Zeneca"
+        android:textStyle="bold"
+        android:textColor="@color/black_main"
+        android:id="@+id/markerType"
+        android:layout_alignParentBottom="true"/>
 
 
 </LinearLayout>

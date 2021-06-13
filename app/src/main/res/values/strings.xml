@@ -2,4 +2,7 @@
     <string name="app_name">AplicatieVaccinare</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <!-- Blue and underlined aici. text -->
+    <string name="login_text">Nu ai cont? Înregistrează-te <font color="#477CF6"><u>aici.</u></font> </string>
+    <string name="register_text">Ai deja cont? Autentifică-te <font color="#477CF6"><u>aici.</u></font> </string>
 </resources>
