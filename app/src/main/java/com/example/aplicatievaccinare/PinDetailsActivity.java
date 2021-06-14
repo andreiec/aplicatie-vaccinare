@@ -3,11 +3,15 @@ package com.example.aplicatievaccinare;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
+import android.app.TimePickerDialog;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.example.aplicatievaccinare.singletons.SaveState;
@@ -15,6 +19,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.Calendar;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -31,6 +36,21 @@ public class PinDetailsActivity extends AppCompatActivity {
     TextView markerAvailable;
     TextView markerType;
 
+    TextView dateText;
+    TextView hourText;
+
+    Button dateButton;
+    Button hourButton;
+
+    private int mYear;
+    private int mMonth;
+    private int mDay;
+    private int mHour;
+    private int mMinute;
+
+    String appointmentDay;
+    String appointmentHour;
+
     Button appointmentButton;
 
     @SuppressLint("SetTextI18n")
@@ -44,6 +64,12 @@ public class PinDetailsActivity extends AppCompatActivity {
         markerAvailable = findViewById(R.id.markerAvailable);
         markerType = findViewById(R.id.markerType);
         appointmentButton = findViewById(R.id.appointment_button);
+
+        dateText = findViewById(R.id.appointment_set_date_text);
+        hourText = findViewById(R.id.appointment_set_hour_text);
+
+        dateButton = findViewById(R.id.appointment_set_date_button);
+        hourButton = findViewById(R.id.appointment_set_hour_button);
 
         String title = getIntent().getStringExtra("title");
         String address = getIntent().getStringExtra("address");
@@ -73,6 +99,45 @@ public class PinDetailsActivity extends AppCompatActivity {
         markerAvailable.setText("Doze disponibile\n" + available);
         markerType.setText("Vaccin\n" + type);
 
+        // Date Click
+        dateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                mYear = calendar.get(Calendar.YEAR);
+                mMonth = calendar.get(Calendar.MONTH);
+                mDay = calendar.get(Calendar.DAY_OF_MONTH);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(PinDetailsActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                        appointmentDay = year + "-" + (month + 1) + "-" + dayOfMonth;
+                        dateText.setText(appointmentDay);
+                    }
+                }, mYear, mMonth, mDay);
+                datePickerDialog.show();
+            }
+        });
+
+        hourButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final Calendar calendar = Calendar.getInstance();
+                mHour = calendar.get(Calendar.HOUR_OF_DAY);
+                mMinute = calendar.get(Calendar.MINUTE);
+
+                TimePickerDialog timePickerDialog = new TimePickerDialog(PinDetailsActivity.this, new TimePickerDialog.OnTimeSetListener() {
+                    @Override
+                    public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                        appointmentHour = hourOfDay + ":" + minute + ":00";
+                        hourText.setText(hourOfDay + ":" + minute);
+                    }
+                }, mHour, mMinute, false);
+                timePickerDialog.show();
+            }
+        });
+
+        // Appointment Click
         appointmentButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -81,7 +146,7 @@ public class PinDetailsActivity extends AppCompatActivity {
                 RequestBody body = null;
 
                 try {
-                    body = RequestBody.create(mediaType, "{\r\n    \"patientId\": " + SaveState.getUserFromMemory(getBaseContext()).getId() + ",\r\n    \"date\": \"2020-07-31\",\r\n    \"time\": \"22:00:00\",\r\n    \"vaccineCenterId\": " + id + "\r\n}");
+                    body = RequestBody.create(mediaType, "{\r\n    \"patientId\": " + SaveState.getUserFromMemory(getBaseContext()).getId() + ",\r\n    \"date\": \"" + appointmentDay +"\",\r\n    \"time\": \"" + appointmentHour + "\",\r\n    \"vaccineCenterId\": " + id + "\r\n}");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }

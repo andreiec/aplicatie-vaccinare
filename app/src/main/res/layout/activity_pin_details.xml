@@ -71,6 +71,75 @@
         android:layout_height="0dp"
         android:layout_weight="2" />
 
+    <!-- Date and Time Input -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp">
+
+        <!-- Date -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:text="Selectează o dată"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@color/black_main"
+                android:id="@+id/appointment_set_date_text">
+            </TextView>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dată"
+                android:id="@+id/appointment_set_date_button">
+            </Button>
+
+        </LinearLayout>
+
+        <!-- Time -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp">
+
+            <TextView
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                android:text="Selectează o oră"
+                android:textSize="18sp"
+                android:gravity="center"
+                android:textColor="@color/black_main"
+                android:id="@+id/appointment_set_hour_text">
+            </TextView>
+
+            <Space
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="2" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Oră"
+                android:id="@+id/appointment_set_hour_button">
+            </Button>
+
+        </LinearLayout>
+    </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
