@@ -102,7 +102,7 @@
                 android:background="@color/white"
                 android:textColor="@color/black_main"
                 android:id="@+id/settings_input_CNP"
-                android:maxLength="45">
+                android:maxLength="13">
             </EditText>
         </com.google.android.material.textfield.TextInputLayout>
 
