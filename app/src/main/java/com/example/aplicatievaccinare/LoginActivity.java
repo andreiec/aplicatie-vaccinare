@@ -58,7 +58,7 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+        
         inputEmail = findViewById(R.id.login_input_mail);
         inputPass = findViewById(R.id.login_input_password);
 
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String apiUrl = "http://192.168.1.106:8080/oauth/token";
+                String apiUrl = "http://" + BuildConfig.SERVER_IP + ":8080/oauth/token";
 
                 // Magic
                 OkHttpClient client = new OkHttpClient().newBuilder().build();
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
                             i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
                             // Request user info after successful login
-                            Request userInfoRequest = new Request.Builder().url("http://192.168.1.106:8080/users/getByEmail?userEmail=" + inputEmail.getText().toString()).method("GET", null)
+                            Request userInfoRequest = new Request.Builder().url("http://" + BuildConfig.SERVER_IP + ":8080/users/getByEmail?userEmail=" + inputEmail.getText().toString()).method("GET", null)
                                     .addHeader("Authorization", "Bearer " + access_token).build();
 
                             // Call API to get info about user after first api call (Continue login process)

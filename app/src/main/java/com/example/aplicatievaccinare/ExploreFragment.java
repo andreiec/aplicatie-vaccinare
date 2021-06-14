@@ -134,7 +134,7 @@ public class ExploreFragment extends Fragment {
         protected ArticleListing[] doInBackground(Void... params) {
 
             try{
-                String apiUrl = "http://192.168.1.106:8080/articles/";
+                String apiUrl = "http://" + BuildConfig.SERVER_IP + ":8080/articles/";
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 ArticleListing[] articleListings = restTemplate.getForObject(apiUrl, ArticleListing[].class);

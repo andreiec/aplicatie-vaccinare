@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.aplicatievaccinare.ArticlePageActivity;
+import com.example.aplicatievaccinare.BuildConfig;
 import com.example.aplicatievaccinare.R;
 
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
@@ -95,7 +96,7 @@ public class RecyclerViewAdapter extends  RecyclerView.Adapter<RecyclerViewAdapt
         protected Article doInBackground(Integer... id) {
 
             try{
-                String apiUrl = "http://192.168.1.106:8080/articles/" + id[0];
+                String apiUrl = "http://" + BuildConfig.SERVER_IP + ":8080/articles/" + id[0];
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
                 Article article = restTemplate.getForObject(apiUrl, Article.class);

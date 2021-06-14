@@ -137,7 +137,7 @@ public class ProfileFragment extends Fragment {
 
         try {
             request = new Request.Builder()
-                    .url("http://192.168.1.106:8080/appointments/" + SaveState.getUserFromMemory(getContext()).getId())
+                    .url("http://" + BuildConfig.SERVER_IP + ":8080/appointments/" + SaveState.getUserFromMemory(getContext()).getId())
                     .method("GET", null)
                     .build();
         } catch (ParseException e) {

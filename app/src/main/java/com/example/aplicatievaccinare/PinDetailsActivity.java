@@ -87,7 +87,7 @@ public class PinDetailsActivity extends AppCompatActivity {
                 }
 
                 Request request = new Request.Builder()
-                        .url("http://192.168.1.106:8080/appointments/add")
+                        .url("http://" + BuildConfig.SERVER_IP + ":8080/appointments/add")
                         .method("POST", body)
                         .addHeader("Authorization", "Bearer " + SaveState.token)
                         .addHeader("Content-Type", "application/json")

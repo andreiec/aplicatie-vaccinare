@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Arrays;
 
@@ -44,16 +45,28 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 // Minimal check to see if passwords match
-                if(inputPass.getText().toString().equals(inputPassConfirm.getText().toString())) {
-                    // Open next page of registration
-                    try {
-                        Intent i = new Intent(mContext, RegisterFinalActivity.class);
-                        i.putExtra("email", inputEmail.getText().toString());
-                        i.putExtra("pass", inputPass.getText().toString());
-                        mContext.startActivity(i);
-                    } catch (Exception e) {
-                        Log.i("Not found", Arrays.toString(e.getStackTrace()));
+                if (isEmailValid(inputEmail.getText().toString())) {
+                    if(inputPass.getText().toString().equals(inputPassConfirm.getText().toString())) {
+                        // Open next page of registration
+                        try {
+                            Intent i = new Intent(mContext, RegisterFinalActivity.class);
+                            i.putExtra("email", inputEmail.getText().toString());
+                            i.putExtra("pass", inputPass.getText().toString());
+                            mContext.startActivity(i);
+                        } catch (Exception e) {
+                            Log.i("Not found", Arrays.toString(e.getStackTrace()));
+                        }
+                    } else {
+                        runOnUiThread(() -> {
+                            Toast toast = Toast.makeText(getApplicationContext(), "Parolele introduse nu coincid!", Toast.LENGTH_LONG);
+                            toast.show();
+                        });
                     }
+                } else {
+                    runOnUiThread(() -> {
+                        Toast toast = Toast.makeText(getApplicationContext(), "Email-ul introdus nu este corespunzător!", Toast.LENGTH_LONG);
+                        toast.show();
+                    });
                 }
             }
         });
@@ -66,5 +79,9 @@ public class RegisterActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    boolean isEmailValid(CharSequence email) {
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches();
     }
 }

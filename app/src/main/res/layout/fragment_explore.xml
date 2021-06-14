@@ -12,13 +12,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-<!--        &lt;!&ndash; Blue Square Background &ndash;&gt;-->
-<!--        <View-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="160dp"-->
-<!--            android:background="@color/blue_main">-->
-<!--        </View>-->
-
         <!-- Main Content -->
         <LinearLayout
             android:orientation="vertical"
@@ -139,45 +132,6 @@
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1" />
-
-                    <!-- Button -->
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="24dp"
-                        android:background="@drawable/button_rounded"
-                        android:gravity="center"
-                        android:layout_marginBottom="2dp"
-                        style="@style/Widget.AppCompat.Button.Colored">
-
-                        <!-- Star -->
-                        <View
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
-
-                            android:background="@drawable/star_icon"
-
-                            android:layout_marginRight="8dp"
-                            android:layout_marginLeft="10dp"
-                            android:layout_marginEnd="8dp"
-                            android:layout_marginStart="10dp">
-                        </View>
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-
-                            android:fontFamily="@font/poppinsbold"
-                            android:textSize="13sp"
-                            android:textColor="@color/white"
-
-                            android:layout_marginRight="10dp"
-                            android:layout_marginEnd="10dp"
-                            android:layout_marginTop="1dp"
-
-                            android:text="Programează-te">
-                        </TextView>
-
-                    </LinearLayout>
                 </LinearLayout>
 
                 <!-- Cards -->

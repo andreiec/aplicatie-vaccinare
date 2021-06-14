@@ -98,7 +98,7 @@ public class SettingsFragment extends Fragment {
                     MediaType mediaType = MediaType.parse("application/json");
                     RequestBody body = RequestBody.create(mediaType, "{\r\n    \"email\": \"" + user.getEmail() + "\",\r\n    \"name\": \"" + inputName.getText().toString() +"\",\r\n    \"birthDate\": \"" + dataNastere + "\",\r\n    \"address\": \"" + inputAddress.getText().toString() +"\",\r\n    \"cnp\": \"" + inputCNP.getText().toString() + "\"\r\n}");
                     Request request = new Request.Builder()
-                            .url("http://192.168.1.106:8080/users/edit/" + user.getId())
+                            .url("http://" + BuildConfig.SERVER_IP + ":8080/users/edit/" + user.getId())
                             .method("PUT", body)
                             .addHeader("Authorization", "Bearer " + SaveState.token)
                             .addHeader("Content-Type", "application/json")

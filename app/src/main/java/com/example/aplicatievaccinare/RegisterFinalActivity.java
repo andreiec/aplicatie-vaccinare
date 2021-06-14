@@ -80,7 +80,7 @@ public class RegisterFinalActivity extends AppCompatActivity {
         @Override
         protected Void doInBackground(String... params) {
             try{
-                String apiUrl = "http://192.168.1.106:8080/users/register";
+                String apiUrl = "http://" + BuildConfig.SERVER_IP + ":8080/users/register";
                 RestTemplate restTemplate = new RestTemplate();
                 restTemplate.getMessageConverters().add(new MappingJackson2HttpMessageConverter());
 
